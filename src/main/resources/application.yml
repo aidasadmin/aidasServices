@@ -1,0 +1,24 @@
+server:
+  port: 8081
+  contextPath: /aidas
+
+spring:
+  session:
+    store-type: none
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss  
+  #boot:
+    #admin:
+     #client:
+        #service-url: http://localhost:8091/admin
+     #url: http://localhost:8080
+#todo: make sure to always enable security in production
+security:
+  basic:
+    enabled: false
+    
+##management endpoints on a separate port
+#management:
+  #port: 8091
+  #security:
+    #enabled: false # management port is internal only. no need to secure it.
