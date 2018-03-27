@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration debug="true" scan="true" scanPeriod="5 seconds">
+
+	<property scope="local" resource="system.properties"/>
+
+	<contextListener class="org.aidas.app.util.LoggerStartupListener"/>
+
+	<timestamp key="bySecond" datePattern="yyyy-MM-dd-'T-'HHmmss" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern> %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level  %class{36}.%M %L  - %msg%n</pattern>
+			
+		</layout>
+	</appender>
+
+	<appender name="FILE-AUDIT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${APP_HOME}/logs/${LOG_FILE}.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${APP_HOME}/logs/${bySecond}_error.%i.log.zip </fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>3</maxIndex>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1MB</maxFileSize>
+		</triggeringPolicy>
+
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level  %class{36}.%M %L  - %msg%n</pattern>
+		</encoder>
+
+	</appender>
+
+	<root level="${ROOT_LOG_LEVEL}">
+		<appender-ref ref="FILE-AUDIT" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
